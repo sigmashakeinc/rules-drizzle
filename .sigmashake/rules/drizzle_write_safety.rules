@@ -6,7 +6,7 @@ rule drizzle-block-unsafe-patterns {
   priority 90
   severity error
   DENY write
-  IF path GLOB "**/*" AND content CONTAINS "UNSAFE_drizzle_PATTERN"
+  IF path GLOB "**/*" AND content CONTAINS "sql`"
   MESSAGE "Blocked an unsafe pattern in drizzle. Use the recommended best practices for 2025/2026."
 }
 
@@ -14,7 +14,7 @@ rule drizzle-force-updated-api {
   enabled true
   priority 80
   severity warning
-  ASK write
-  IF path GLOB "**/*" AND content CONTAINS "OLD_drizzle_API"
+  LOG write
+  IF path GLOB "**/*" AND content CONTAINS "drizzle.execute"
   MESSAGE "You are using an outdated API for drizzle. Please upgrade to the newer API."
 }
